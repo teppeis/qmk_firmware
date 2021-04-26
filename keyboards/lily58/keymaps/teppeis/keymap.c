@@ -27,6 +27,8 @@ enum layer_number {
 
 #define RAISE MO(_RAISE)
 #define LOWER MO(_LOWER)
+#define KANA KC_LANG1
+#define EISU KC_LANG2
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -205,4 +207,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // set_timelog();
     }
     return true;
+}
+
+void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case KC_ESC:
+            if (record->event.pressed) {
+                tap_code(EISU);
+                break;
+            }
+    }
 }
