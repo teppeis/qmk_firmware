@@ -137,9 +137,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #    define ANIM_FRAMES 4
 #    define ANIM_FRAME_DURATION 100  // how long each frame lasts in ms
 #    define ANIM_SIZE 512
+#    define ANIM_STARUP_DURATION 5000
 
 uint32_t anim_timer          = 0;
 uint32_t last_keypress_timer = 0;
+uint32_t startup_timer       = 0;
 uint8_t  current_frame       = 0;
 bool     key_pressed         = false;
 
@@ -176,7 +178,9 @@ static void render_animation(void) {
         oled_write_raw_P(logo[abs((ANIM_FRAMES - 1) - current_frame)], ANIM_SIZE);
     }
 
-    if (key_pressed) {
+    bool should_animation(void) { return key_pressed || timer_elapsed32(startup_timer) < ANIM_STARUP_DURATION; }
+
+    if (should_animation()) {
         if (timer_elapsed32(anim_timer) > ANIM_FRAME_DURATION) {
             anim_timer = timer_read32();
             animation_phase();
@@ -211,6 +215,8 @@ bool should_process_keypress(void) { return true; }
 
 #endif  // OLED_DRIVER_ENABLE
 
+void keyboard_post_init_user(void) { startup_timer = timer_read32(); }
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
 #ifdef OLED_DRIVER_ENABLE
@@ -218,7 +224,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         key_pressed         = true;
         last_keypress_timer = timer_read32();
 #endif
-        // set_timelog();
     }
     return true;
 }
