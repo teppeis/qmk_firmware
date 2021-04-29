@@ -25,76 +25,76 @@ enum layer_number {
     _ADJUST,
 };
 
-#define RAISE MO(_RAISE)
-#define LOWER MO(_LOWER)
+// for macOS
 #define KANA KC_LANG1
 #define EISU KC_LANG2
+#define LOCK LCTL(LCMD(KC_Q)) // screen lock
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* QWERTY
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * | ESC  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  ~   |
+ * | ESC  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  BS  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * | Tab  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  -   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |LCTRL |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
+ * | CTRL |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
  * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
- * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |SftEnt|
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   |LOWER | LGUI | Alt  | /Space  /       \Enter \  |BackSP| RGUI |RAISE |
- *                   |      |      |      |/       /         \      \ |      |      |      |
+ *                   | OPT  | CMD  | LOWER| / Space /       \ BS   \  | RAISE| CMD  | CMD  |
+ *                   |      | EISU | EISU |/       /         \      \ | Ent  | KANA |      |
  *                   `-------------------''-------'           '------''--------------------'
  */
  [_QWERTY] = LAYOUT(
-  KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_GRV,
+  KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
   KC_LCTRL, KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_LBRC,  KC_RBRC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
-                      LOWER, KC_LGUI,  KC_LALT, KC_SPC,   KC_ENT,   KC_BSPC,  KC_RGUI, RAISE
+  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_LBRC,  KC_RBRC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  RSFT_T(KC_ENT),
+             KC_LOPT, LCMD_T(EISU), LT(_LOWER, EISU), KC_SPC,  KC_BSPC, LT(_RAISE, KC_ENT), RCMD_T(KANA), KC_RCMD
 ),
 
 /* LOWER
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |  Del |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |   !  |   @  |   #  |   $  |   %  |                    |   ^  |   &  |   *  |   (  |   )  |      |
+ * |      |   !  |   @  |   #  |   $  |   %  |                    |   ^  |   &  |   *  |   (  |   )  |   -  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |   1  |   2  |   3  |   4  |   5  |-------.    ,-------|   6  |   7  |   8  |   9  |   0  |      |
+ * |      |      |      |      |      |      |-------.    ,-------|      |   \  |   =  |   [  |   ]  |   `  |
  * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------|    |-------|   |  |   `  |   +  |   {  |   }  |      |
+ * |      |      |      |      |      |      |-------|    |-------|      |   |  |   +  |   {  |   }  |   ~  |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   |LOWER | LGUI | Alt  | /Space  /       \Enter \  |BackSP| RGUI |RAISE |
- *                   |      |      |      |/       /         \      \ |      |      |      |
+ *                   | OPT  | CMD  | LOWER| / Space /       \ Del  \  | RAISE| CMD  | CMD  |
+ *                   |      | EISU | EISU |/       /         \      \ | Ent  | KANA |      |
  *                   `-------------------''-------'           '------''--------------------'
  */
 [_LOWER] = LAYOUT(
-  _______, _______, _______, _______, _______, _______,                   _______, _______, _______,_______, _______, _______,
+  _______, _______, _______, _______, _______, _______,                   _______, _______, _______,_______, _______,  KC_DEL,
   _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
-  _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, KC_PIPE, KC_GRAVE, KC_PLUS, KC_LCBR, KC_RCBR, _______,
-                             _______, _______, _______, _______, _______,  _______, _______, _______
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, KC_BSLS, KC_EQL,  KC_LBRC, KC_RBRC, KC_GRAVE,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, KC_PIPE, KC_PLUS, KC_LCBR, KC_RCBR, KC_TILDE,
+                             _______, _______, _______, _______, KC_DEL,  _______, _______, _______
 ),
 
 /* RAISE
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |                    |  F7  |  F8  |  F9  | F10  | F11  | F12  |
+ * |   `  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------.    ,-------|      | Left | Down |  Up  |Right |      |
- * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------|    |-------|   +  |   =  |   [  |   ]  |   \  |      |
+ * |      |  F1  |  F2  |  F3  |  F4  |  F5  |-------.    ,-------| Left | Down |  Up  | Right|      |      |
+ * |------+------+------+------+------+------|  F11  |    |  F12  |------+------+------+------+------+------|
+ * |      |  F6  |  F7  |  F8  |  F9  |  F10 |-------|    |-------| Home | PGDN | PGUP | End  |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   |LOWER | LGUI | Alt  | /Space  /       \Enter \  |BackSP| RGUI |RAISE |
- *                   |      |      |      |/       /         \      \ |      |      |      |
+ *                   | OPT  | CMD  | LOWER| / Space /       \ BS   \  | RAISE| CMD  | CMD  |
+ *                   |      | EISU | EISU |/       /         \      \ | Ent  | KANA |      |
  *                   `-------------------''-------'           '------''--------------------'
  */
 [_RAISE] = LAYOUT(
   _______, _______, _______, _______, _______, _______,                     _______, _______, _______, _______, _______, _______,
-  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                       KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
-  _______, _______, _______, _______, _______, _______,                     XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX,
-  _______, _______, _______, _______, _______, _______,   _______, _______, KC_PLUS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS, _______,
+  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                        KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
+  _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                       KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, XXXXXXX,
+  _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,  KC_F12,   KC_HOME, KC_PGDN, KC_PGUP, KC_END,  XXXXXXX, _______,
                              _______, _______, _______,  _______, _______,  _______, _______, _______
 ),
 
@@ -102,21 +102,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |      | RESET|      |EEPRST|      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------.    ,-------|      |      |      |      |      |      |
+ * |      |      | DEBUG|      |      |      |-------.    ,-------|      |      |      | Lock |      |      |
  * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------|    |-------|      |      |      |      |      |      |
+ * |      |      |      |      |      |      |-------|    |-------|      | MUTE | Vol- | Vol+ |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   |LOWER | LGUI | Alt  | /Space  /       \Enter \  |BackSP| RGUI |RAISE |
- *                   |      |      |      |/       /         \      \ |      |      |      |
+ *                   | OPT  | CMD  | LOWER| / Space /       \ BS   \  | RAISE| CMD  | CMD  |
+ *                   |      | EISU | EISU |/       /         \      \ | Ent  | KANA |      |
  *                   `----------------------------'           '------''--------------------'
  */
   [_ADJUST] = LAYOUT(
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX, RESET,   XXXXXXX, EEP_RST, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX, XXXXXXX, DEBUG,   XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, LOCK,    XXXXXXX, XXXXXXX,
+  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC__MUTE,KC__VOLUP,KC__VOLDOWN, XXXXXXX, XXXXXXX,
                              _______, _______, _______, _______, _______,  _______, _______, _______
   )
 };
