@@ -20,14 +20,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-// Handedness
+//// Split Keyboard
+// https://docs.qmk.fm/#/feature_split_keyboard
 // #define MASTER_LEFT
 // #define MASTER_RIGHT
 // #define EE_HANDS
 #define SPLIT_USB_DETECT
-
 // for OLED animation in Slave
 #define SPLIT_TRANSPORT_MIRROR
 
+//// Tap-Hold Configuration Options
+// https://docs.qmk.fm/#/tap_hold
 #define TAPPING_FORCE_HOLD
-#define TAPPING_TERM 200
+#define TAPPING_TERM 150
+#define PERMISSIVE_HOLD
