@@ -189,6 +189,15 @@ static void render_animation(void) {
     }
 }
 
+void render_wpm(void) {
+#    ifdef WPM_ENABLE
+    char wpm_counter[4];
+    snprintf(wpm_counter, sizeof(wpm_counter), "%3u", get_current_wpm());
+    oled_write_P(PSTR("WPM: "), false);
+    oled_write_ln(wpm_counter, false);
+#    endif
+}
+
 void        set_keylog(uint16_t keycode, keyrecord_t *record);
 const char *read_keylog(void);
 const char *read_keylogs(void);
@@ -203,6 +212,7 @@ void oled_task_user(void) {
 
     if (is_keyboard_master()) {
         oled_write_ln(read_layer_state(), false);
+        render_wpm();
         oled_write_ln(read_keylog(), false);
         oled_write_ln(read_keylogs(), false);
     } else {
